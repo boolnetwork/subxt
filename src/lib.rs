@@ -52,8 +52,8 @@ use codec::{
 };
 use futures::future;
 use jsonrpsee_http_client::HttpClientBuilder;
-use jsonrpsee_ws_client::WsClientBuilder;
 use jsonrpsee_types::Subscription;
+use jsonrpsee_ws_client::WsClientBuilder;
 use sp_core::{
     storage::{
         StorageChangeSet,
@@ -73,7 +73,7 @@ use std::{
 mod error;
 mod events;
 pub mod extrinsic;
-mod frame;
+pub mod frame;
 mod metadata;
 mod rpc;
 mod runtimes;
@@ -179,8 +179,8 @@ impl<T: Runtime> ClientBuilder<T> {
     ///
     /// If there is already a type size registered with this name.
     pub fn register_type_size<U>(mut self, name: &str) -> Self
-    where
-        U: Codec + Send + Sync + 'static,
+        where
+            U: Codec + Send + Sync + 'static,
     {
         self.event_type_registry.register_type_size::<U>(name);
         self
@@ -224,7 +224,7 @@ impl<T: Runtime> ClientBuilder<T> {
             rpc.runtime_version(None),
             rpc.system_properties(),
         )
-        .await;
+            .await;
         let metadata = metadata?;
         if let Err(missing) = self.event_type_registry.check_missing_type_sizes(&metadata)
         {
@@ -435,8 +435,8 @@ impl<T: Runtime> Client<T> {
 
     /// Get a header
     pub async fn header<H>(&self, hash: Option<H>) -> Result<Option<T::Header>, Error>
-    where
-        H: Into<T::Hash> + 'static,
+        where
+            H: Into<T::Hash> + 'static,
     {
         let header = self.rpc.header(hash.map(|h| h.into())).await?;
         Ok(header)
@@ -459,8 +459,8 @@ impl<T: Runtime> Client<T> {
 
     /// Get a block
     pub async fn block<H>(&self, hash: Option<H>) -> Result<Option<ChainBlock<T>>, Error>
-    where
-        H: Into<T::Hash> + 'static,
+        where
+            H: Into<T::Hash> + 'static,
     {
         let block = self.rpc.block(hash.map(|h| h.into())).await?;
         Ok(block)
@@ -472,8 +472,8 @@ impl<T: Runtime> Client<T> {
         keys: Vec<StorageKey>,
         hash: Option<H>,
     ) -> Result<ReadProof<T::Hash>, Error>
-    where
-        H: Into<T::Hash> + 'static,
+        where
+            H: Into<T::Hash> + 'static,
     {
         let proof = self.rpc.read_proof(keys, hash.map(|h| h.into())).await?;
         Ok(proof)
@@ -533,8 +533,8 @@ impl<T: Runtime> Client<T> {
         call: C,
         signer: &(dyn Signer<T> + Send + Sync),
     ) -> Result<UncheckedExtrinsic<T>, Error>
-    where
-        <<T::Extra as SignedExtra<T>>::Extra as SignedExtension>::AdditionalSigned:
+        where
+            <<T::Extra as SignedExtra<T>>::Extra as SignedExtension>::AdditionalSigned:
             Send + Sync,
     {
         let account_nonce = if let Some(nonce) = signer.nonce() {
@@ -550,7 +550,7 @@ impl<T: Runtime> Client<T> {
             call,
             signer,
         )
-        .await?;
+            .await?;
         Ok(signed)
     }
 
@@ -583,8 +583,8 @@ impl<T: Runtime> Client<T> {
         call: C,
         signer: &(dyn Signer<T> + Send + Sync),
     ) -> Result<T::Hash, Error>
-    where
-        <<T::Extra as SignedExtra<T>>::Extra as SignedExtension>::AdditionalSigned:
+        where
+            <<T::Extra as SignedExtra<T>>::Extra as SignedExtension>::AdditionalSigned:
             Send + Sync,
     {
         let extrinsic = self.create_signed(call, signer).await?;
@@ -597,8 +597,8 @@ impl<T: Runtime> Client<T> {
         call: C,
         signer: &(dyn Signer<T> + Send + Sync),
     ) -> Result<ExtrinsicSuccess<T>, Error>
-    where
-        <<T::Extra as SignedExtra<T>>::Extra as SignedExtension>::AdditionalSigned:
+        where
+            <<T::Extra as SignedExtra<T>>::Extra as SignedExtension>::AdditionalSigned:
             Send + Sync,
     {
         let extrinsic = self.create_signed(call, signer).await?;

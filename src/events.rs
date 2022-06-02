@@ -86,8 +86,8 @@ dyn_clone::clone_trait_object!(TypeSegmenter);
 
 struct TypeMarker<T>(PhantomData<T>);
 impl<T> TypeSegmenter for TypeMarker<T>
-where
-    T: Codec + Send + Sync,
+    where
+        T: Codec + Send + Sync,
 {
     fn segment(&self, input: &mut &[u8], output: &mut Vec<u8>) -> Result<(), Error> {
         T::decode(input).map_err(Error::from)?.encode_to(output);
@@ -294,8 +294,8 @@ impl<T: Runtime> EventTypeRegistry<T> {
     ///
     /// If there is already a type size registered with this name.
     pub fn register_type_size<U>(&mut self, name: &str)
-    where
-        U: Codec + Send + Sync + 'static,
+        where
+            U: Codec + Send + Sync + 'static,
     {
         // A segmenter decodes a type from an input stream (&mut &[u8]) and returns te serialized
         // type to the output stream (&mut Vec<u8>).
@@ -460,7 +460,7 @@ mod tests {
                     },
                 }),
             ))
-            .unwrap(),
+                .unwrap(),
             EventTypeRegistry::new(),
         );
 

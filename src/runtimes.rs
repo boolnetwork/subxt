@@ -169,7 +169,6 @@ use crate::{
             System,
             SystemEventTypeRegistry,
         },
-        oracle::Oracle,
     },
     EventTypeRegistry,
 };
@@ -222,8 +221,6 @@ impl System for DefaultNodeRuntime {
     type Extrinsic = OpaqueExtrinsic;
     type AccountData = AccountData<<Self as Balances>::Balance>;
 }
-
-impl Oracle for DefaultNodeRuntime {}
 
 impl Balances for DefaultNodeRuntime {
     type Balance = u128;

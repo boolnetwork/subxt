@@ -116,17 +116,17 @@ impl<'a, T: Runtime> EventSubscription<'a, T> {
                                     continue
                                 }
                             }
-                            let event = match raw {
-                                Raw::Event(event) => event,
-                                Raw::Error(err) => return Some(Err(err.into())),
-                            };
-                            if let Some((module, variant)) = self.event {
-                                if event.module != module || event.variant != variant {
-                                    continue
-                                }
-                            }
-                            self.events.push_back(event);
                         }
+                        let event = match raw {
+                            Raw::Event(event) => event,
+                            Raw::Error(err) => return Some(Err(err.into())),
+                        };
+                        if let Some((module, variant)) = self.event {
+                            if event.module != module || event.variant != variant {
+                                continue
+                            }
+                        }
+                        self.events.push_back(event);
                     }
                 }
             }
@@ -197,7 +197,9 @@ pub enum EventStorageSubscription<T: Runtime> {
 
 impl<T: Runtime> EventStorageSubscription<T> {
     /// Gets the next change_set from the subscription.
-    pub async fn next(&mut self) -> Result<Option<StorageChangeSet<T::Hash>>, jsonrpsee_types::error::Error> {
+    pub async fn next(
+        &mut self,
+    ) -> Result<Option<StorageChangeSet<T::Hash>>, jsonrpsee_types::error::Error> {
         match self {
             Self::Imported(event_sub) => event_sub.next().await,
             Self::Finalized(event_sub) => Ok(event_sub.next().await),

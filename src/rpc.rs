@@ -34,16 +34,16 @@ use frame_metadata::RuntimeMetadataPrefixed;
 use jsonrpsee_http_client::HttpClient;
 use jsonrpsee_types::{
     error::Error as RpcError,
-    v2::params::JsonRpcParams as Params,
     to_json_value,
-    DeserializeOwned,
     traits::{
         Client,
         SubscriptionClient,
     },
+    v2::params::JsonRpcParams as Params,
+    DeserializeOwned,
+    Subscription,
 };
 use jsonrpsee_ws_client::WsClient;
-use jsonrpsee_types::Subscription;
 use serde::{
     Deserialize,
     Serialize,
@@ -205,7 +205,7 @@ impl RpcClient {
                 Err(RpcError::Custom(
                     "Subscriptions not supported on HTTP transport".to_owned(),
                 )
-                .into())
+                    .into())
             }
             #[cfg(feature = "client")]
             Self::Subxt(inner) => {
@@ -553,7 +553,7 @@ impl<T: Runtime> Rpc<T> {
 
         while let Ok(status) = xt_sub.next().await {
             log::info!("received status {:?}", status);
-            if let Some(status) =status {
+            if let Some(status) = status {
                 match status {
                     // ignore in progress extrinsic for now
                     TransactionStatus::Future
@@ -568,7 +568,9 @@ impl<T: Runtime> Rpc<T> {
                         continue
                     }
                     TransactionStatus::Invalid => return Err("Extrinsic Invalid".into()),
-                    TransactionStatus::Usurped(_) => return Err("Extrinsic Usurped".into()),
+                    TransactionStatus::Usurped(_) => {
+                        return Err("Extrinsic Usurped".into())
+                    }
                     TransactionStatus::Dropped => return Err("Extrinsic Dropped".into()),
                     TransactionStatus::Retracted(_) => {
                         return Err("Extrinsic Retracted".into())

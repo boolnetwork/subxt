@@ -27,14 +27,18 @@ use codec::{
     Error as CodecError,
 };
 
-use frame_metadata::{decode_different::DecodeDifferent,
-                     RuntimeMetadata,
-                     RuntimeMetadataPrefixed,
-                     v12::StorageEntryModifier,
-                     v12::StorageEntryType,
-                     v12::StorageHasher,
-                     META_RESERVED};
-use frame_metadata::v12::EventMetadata;
+use frame_metadata::{
+    decode_different::DecodeDifferent,
+    v12::{
+        EventMetadata,
+        StorageEntryModifier,
+        StorageEntryType,
+        StorageHasher,
+    },
+    RuntimeMetadata,
+    RuntimeMetadataPrefixed,
+    META_RESERVED,
+};
 use sp_core::storage::StorageKey;
 
 use crate::Encoded;
@@ -89,8 +93,8 @@ pub struct Metadata {
 impl Metadata {
     /// Returns `ModuleMetadata`.
     pub fn module<S>(&self, name: S) -> Result<&ModuleMetadata, MetadataError>
-    where
-        S: ToString,
+        where
+            S: ToString,
     {
         let name = name.to_string();
         self.modules
@@ -100,8 +104,8 @@ impl Metadata {
 
     /// Returns `ModuleWithCalls`.
     pub fn module_with_calls<S>(&self, name: S) -> Result<&ModuleWithCalls, MetadataError>
-    where
-        S: ToString,
+        where
+            S: ToString,
     {
         let name = name.to_string();
         self.modules_with_calls
@@ -627,9 +631,7 @@ fn convert<B: 'static, O: 'static>(
     }
 }
 
-fn convert_event(
-    event: EventMetadata,
-) -> Result<ModuleEventMetadata, ConversionError> {
+fn convert_event(event: EventMetadata) -> Result<ModuleEventMetadata, ConversionError> {
     let name = convert(event.name)?;
     let mut arguments = Vec::new();
     for arg in convert(event.arguments)? {
