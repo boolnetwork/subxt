@@ -46,6 +46,7 @@ hex = "0.4.3"
 sp-std = "3.0.0"
 application-crypto = { version = "3.0.0", package = "sp-application-crypto" }
 pallet-staking = "3.0.0"
+libsecp256k1 = { version = "0.3.2", default-features = false, features = ["hmac"] }
 
 sp-rpc = { version = "3.0.0", package = "sp-rpc" }
 sp-core = { version = "3.0.0", package = "sp-core" }

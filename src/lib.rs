@@ -68,7 +68,7 @@ use std::{
     marker::PhantomData,
     sync::Arc,
 };
-// use scale_info::{form::{Form, MetaForm}};
+pub use secp256k1::{PublicKey, SecretKey, sign, Message};
 
 mod error;
 mod events;

@@ -6748,6 +6748,7 @@ dependencies = [
  "jsonrpsee-http-client",
  "jsonrpsee-types",
  "jsonrpsee-ws-client",
+ "libsecp256k1",
  "log",
  "num-traits",
  "pallet-balances",

@@ -24,7 +24,7 @@ use super::{
 };
 use crate::runtimes::Runtime;
 use codec::Encode;
-use sp_core::Pair;
+use sp_core::{keccak_256, Pair};
 use sp_runtime::traits::{
     IdentifyAccount,
     SignedExtension,
@@ -34,6 +34,7 @@ use std::{
     future::Future,
     pin::Pin,
 };
+use crate::{PublicKey, SecretKey, sign, Message};
 
 /// Extrinsic signer.
 pub trait Signer<T: Runtime> {
@@ -55,24 +56,23 @@ pub trait Signer<T: Runtime> {
 
 /// Extrinsic signer using a private key.
 #[derive(Clone, Debug)]
-pub struct PairSigner<T: Runtime, P: Pair> {
+pub struct PairSigner<T: Runtime> {
     account_id: T::AccountId,
     nonce: Option<T::Index>,
-    signer: P,
+    signer: SecretKey,
 }
 
-impl<T, P> PairSigner<T, P>
+impl<T> PairSigner<T>
 where
     T: Runtime,
-    T::Signature: From<P::Signature>,
-    <T::Signature as Verify>::Signer:
-        From<P::Public> + IdentifyAccount<AccountId = T::AccountId>,
-    P: Pair,
+    T::Signature: From<sp_core::ecdsa::Signature>,
+    <T::Signature as Verify>::Signer: From<sp_core::ecdsa::Public> + IdentifyAccount<AccountId = T::AccountId>,
 {
     /// Creates a new `Signer` from a `Pair`.
-    pub fn new(signer: P) -> Self {
+    pub fn new(signer: SecretKey) -> Self {
+        let pk_compressed = PublicKey::from_secret_key(&signer).serialize_compressed();
         let account_id =
-            <T::Signature as Verify>::Signer::from(signer.public()).into_account();
+            <T::Signature as Verify>::Signer::from(sp_core::ecdsa::Public::from_raw(pk_compressed)).into_account();
         Self {
             account_id,
             nonce: None,
@@ -91,18 +91,18 @@ where
     }
 
     /// Returns the signer.
-    pub fn signer(&self) -> &P {
+    pub fn signer(&self) -> &SecretKey {
         &self.signer
     }
 }
 
-impl<T, P> Signer<T> for PairSigner<T, P>
+impl<T> Signer<T> for PairSigner<T>
 where
     T: Runtime,
     T::AccountId: Into<T::Address> + 'static,
     <<T::Extra as SignedExtra<T>>::Extra as SignedExtension>::AdditionalSigned: Send,
-    P: Pair + 'static,
-    P::Signature: Into<T::Signature> + 'static,
+    T::Signature: From<sp_core::ecdsa::Signature>,
+    T::AccountId: Into<[u8; 20]>,
 {
     fn account_id(&self) -> &T::AccountId {
         &self.account_id
@@ -116,12 +116,21 @@ where
         &self,
         extrinsic: SignedPayload<T>,
     ) -> Pin<Box<dyn Future<Output = Result<UncheckedExtrinsic<T>, String>> + Send>> {
-        let signature = extrinsic.using_encoded(|payload| self.signer.sign(payload));
+        let signature = extrinsic.using_encoded(|payload| {
+            let msg = Message::parse(&keccak_256(payload));
+            // self.signer.sign(payload)
+            sign(&msg, &self.signer)
+        });
+        let mut raw_sig = signature.0.serialize().to_vec();
+        raw_sig.push(signature.1.serialize());
+
+        let ecdsa_signature = sp_core::ecdsa::Signature::from_slice(raw_sig.as_slice());
         let (call, extra, _) = extrinsic.deconstruct();
         let extrinsic = UncheckedExtrinsic::<T>::new_signed(
             call,
+            // sp_runtime::MultiAddress::Address20(signed),
             self.account_id.clone().into(),
-            signature.into(),
+            ecdsa_signature.into(),
             extra,
         );
         Box::pin(async move { Ok(extrinsic) })
