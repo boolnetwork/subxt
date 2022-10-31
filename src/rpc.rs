@@ -89,6 +89,7 @@ use crate::{
     },
 };
 
+/// Substrate block type
 pub type ChainBlock<T> =
     SignedBlock<Block<<T as System>::Header, <T as System>::Extrinsic>>;
 
@@ -270,6 +271,7 @@ impl<T: Runtime> Clone for Rpc<T> {
 }
 
 impl<T: Runtime> Rpc<T> {
+    /// build a new rpc
     pub fn new(client: RpcClient) -> Self {
         Self {
             client,
@@ -518,6 +520,7 @@ impl<T: Runtime> Rpc<T> {
         Ok(xt_hash)
     }
 
+    /// Subscribe an extrinsic
     pub async fn watch_extrinsic<E: Encode>(
         &self,
         extrinsic: E,

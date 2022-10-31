@@ -51,9 +51,9 @@ use codec::{
     Decode,
 };
 use futures::future;
-use jsonrpsee_http_client::HttpClientBuilder;
+pub use jsonrpsee_http_client::HttpClientBuilder;
 use jsonrpsee_types::Subscription;
-use jsonrpsee_ws_client::WsClientBuilder;
+pub use jsonrpsee_ws_client::WsClientBuilder;
 use sp_core::{
     storage::{
         StorageChangeSet,
@@ -118,7 +118,7 @@ pub use crate::{
     },
     substrate_subxt_proc_macro::*,
 };
-use crate::{
+pub use crate::{
     frame::system::{
         AccountStoreExt,
         Phase,
@@ -261,12 +261,14 @@ impl<T: Runtime> ClientBuilder<T> {
 
 /// Client to interface with a substrate node.
 pub struct Client<T: Runtime> {
-    rpc: Rpc<T>,
+    /// Rpc to connect with node
+    pub rpc: Rpc<T>,
     genesis_hash: T::Hash,
     metadata: Metadata,
     events_decoder: EventsDecoder<T>,
     properties: SystemProperties,
-    runtime_version: RuntimeVersion,
+    /// Should check if same with node
+    pub runtime_version: RuntimeVersion,
     _marker: PhantomData<(fn() -> T::Signature, T::Extra)>,
     page_size: u32,
 }

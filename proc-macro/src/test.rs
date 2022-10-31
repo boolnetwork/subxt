@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with substrate-subxt.  If not, see <http://www.gnu.org/licenses/>.
-
+#![allow(dead_code)]
 use crate::utils;
 use proc_macro2::TokenStream;
 use proc_macro_error::abort;

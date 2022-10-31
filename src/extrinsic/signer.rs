@@ -24,7 +24,7 @@ use super::{
 };
 use crate::runtimes::Runtime;
 use codec::Encode;
-use sp_core::{keccak_256, Pair};
+use sp_core::keccak_256;
 use sp_runtime::traits::{
     IdentifyAccount,
     SignedExtension,
