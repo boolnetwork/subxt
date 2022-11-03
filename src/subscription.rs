@@ -95,7 +95,10 @@ impl<'a, T: Runtime> EventSubscription<'a, T> {
                 return None
             }
             // always return None if subscription has closed
-            let change_set = self.subscription.next().await.ok()?.unwrap();
+            let change_set = match self.subscription.next().await.ok()? {
+                Some(change_set) => change_set,
+                None => return Some(Err(Error::Other("subscription next none".to_string())))
+            };
             if let Some(hash) = self.block.as_ref() {
                 if &change_set.block.clone() == hash {
                     self.finished = true;
@@ -176,7 +179,10 @@ impl<T: Runtime> FinalizedEventStorageSubscription<T> {
             if let Some(storage_change) = self.storage_changes.pop_front() {
                 return Some(storage_change)
             }
-            let header: T::Header = self.subscription.next().await.ok()?.unwrap();
+            let header: T::Header = match self.subscription.next().await.ok()? {
+                Some(header) => header,
+                None => return None
+            };
             self.storage_changes.extend(
                 self.rpc
                     .query_storage_at(&[self.storage_key.clone()], Some(header.hash()))
