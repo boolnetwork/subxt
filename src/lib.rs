@@ -207,10 +207,10 @@ impl<T: Runtime> ClientBuilder<T> {
         } else {
             let url = self.url.as_deref().unwrap_or("ws://127.0.0.1:9944");
             if url.starts_with("ws://") || url.starts_with("wss://") {
-                let ws_client = WsClientBuilder::default().build(url).await.unwrap();
+                let ws_client = WsClientBuilder::default().build(url).await.map_err(|e| Error::Other(format!("{:?}", e)))?;
                 RpcClient::WebSocket(Arc::new(ws_client))
             } else {
-                let http_client = HttpClientBuilder::default().build(url).unwrap();
+                let http_client = HttpClientBuilder::default().build(url).map_err(|e| Error::Other(format!("{:?}", e)))?;
                 RpcClient::Http(Arc::new(http_client))
             }
         };
