@@ -28,13 +28,11 @@ use codec::{
 };
 
 use frame_metadata::{
-    decode_different::DecodeDifferent,
-    v12::{
-        EventMetadata,
-        StorageEntryModifier,
-        StorageEntryType,
-        StorageHasher,
-    },
+    DecodeDifferent,
+    EventMetadata,
+    StorageEntryModifier,
+    StorageEntryType,
+    StorageHasher,
     RuntimeMetadata,
     RuntimeMetadataPrefixed,
     META_RESERVED,
@@ -644,7 +642,7 @@ fn convert_event(event: EventMetadata) -> Result<ModuleEventMetadata, Conversion
 fn convert_entry(
     module_prefix: String,
     storage_prefix: String,
-    entry: frame_metadata::v12::StorageEntryMetadata,
+    entry: frame_metadata::StorageEntryMetadata,
 ) -> Result<StorageMetadata, ConversionError> {
     let default = convert(entry.default)?;
     // let default = entry.default;
@@ -658,13 +656,13 @@ fn convert_entry(
 }
 
 fn convert_error(
-    error: frame_metadata::v12::ErrorMetadata,
+    error: frame_metadata::ErrorMetadata,
 ) -> Result<String, ConversionError> {
     convert(error.name)
 }
 
 fn convert_constant(
-    constant: frame_metadata::v12::ModuleConstantMetadata,
+    constant: frame_metadata::ModuleConstantMetadata,
 ) -> Result<ModuleConstantMetadata, ConversionError> {
     let name = convert(constant.name)?;
     let ty = convert(constant.ty)?;
