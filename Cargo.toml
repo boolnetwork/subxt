@@ -37,15 +37,15 @@ codec = { package = "parity-scale-codec", version = "2.0.1", default-features = 
 # and https://github.com/bitvecto-rs/bitvec/issues/105 are resolved
 funty = "=1.1.0"
 dyn-clone = "1.0.4"
-frame-metadata = { git = "https://github.com/boolnetwork/substrate.git", branch = "bool-network-v3.0.0", features = ["std"]}
-frame-support = { git = "https://github.com/boolnetwork/substrate.git", branch = "bool-network-v3.0.0" }
-sp-runtime = { git = "https://github.com/boolnetwork/substrate.git", branch = "bool-network-v3.0.0" }
-sp-version = { git = "https://github.com/boolnetwork/substrate.git", branch = "bool-network-v3.0.0" }
-sp-std = { git = "https://github.com/boolnetwork/substrate.git", branch = "bool-network-v3.0.0" }
-application-crypto = { git = "https://github.com/boolnetwork/substrate.git", branch = "bool-network-v3.0.0", package = "sp-application-crypto", default-features = false, features = ["std"]}
-pallet-staking = { git = "https://github.com/boolnetwork/substrate.git", branch = "bool-network-v3.0.0" }
-sp-rpc = { git = "https://github.com/boolnetwork/substrate.git", branch = "bool-network-v3.0.0" }
-sp-core = { git = "https://github.com/boolnetwork/substrate.git", branch = "bool-network-v3.0.0" }
+frame-metadata = { git = "https://github.com/boolnetwork/substrate.git", branch = "hl-fix-syncing-stucks", features = ["std"]}
+frame-support = { git = "https://github.com/boolnetwork/substrate.git", branch = "hl-fix-syncing-stucks" }
+sp-runtime = { git = "https://github.com/boolnetwork/substrate.git", branch = "hl-fix-syncing-stucks" }
+sp-version = { git = "https://github.com/boolnetwork/substrate.git", branch = "hl-fix-syncing-stucks" }
+sp-std = { git = "https://github.com/boolnetwork/substrate.git", branch = "hl-fix-syncing-stucks" }
+application-crypto = { git = "https://github.com/boolnetwork/substrate.git", branch = "hl-fix-syncing-stucks", package = "sp-application-crypto", default-features = false, features = ["std"]}
+pallet-staking = { git = "https://github.com/boolnetwork/substrate.git", branch = "hl-fix-syncing-stucks" }
+sp-rpc = { git = "https://github.com/boolnetwork/substrate.git", branch = "hl-fix-syncing-stucks" }
+sp-core = { git = "https://github.com/boolnetwork/substrate.git", branch = "hl-fix-syncing-stucks" }
 substrate-subxt-client = { version = "0.7.0", path = "client", optional = true }
 substrate-subxt-proc-macro = { version = "0.15.0", path = "proc-macro" }
 hex = "0.4.3"
