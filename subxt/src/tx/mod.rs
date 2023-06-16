@@ -18,6 +18,8 @@ mod tx_progress;
 // feature if we want to avoid needing sp_core and sp_runtime.
 #[cfg(feature = "substrate-compat")]
 pub use self::signer::PairSigner;
+#[cfg(feature = "substrate-compat")]
+pub use self::signer::BoolSigner;
 
 pub use self::{
     signer::Signer,
@@ -25,3 +27,4 @@ pub use self::{
     tx_payload::{dynamic, BoxedPayload, DynamicPayload, Payload, TxPayload},
     tx_progress::{TxInBlock, TxProgress, TxStatus},
 };
+pub use secp256k1::{PublicKey, SecretKey, sign as secp_sign, Message};
