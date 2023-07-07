@@ -149,7 +149,7 @@ mod bool_signer {
             T: Config,
             T::Signature: From<sp_core::ecdsa::Signature>,
             T::AccountId: Into<[u8; 20]>,
-            <T as Config>::Address: From<[u8; 20]>,
+            <T as Config>::Address: From<T::AccountId>,
             T::Signature: Verify,
     {
         fn account_id(&self) -> &T::AccountId {
@@ -157,7 +157,7 @@ mod bool_signer {
         }
 
         fn address(&self) -> T::Address {
-            self.account_id.clone().into().into()
+            T::Address::from(self.account_id.clone())
         }
 
         fn sign(&self, signer_payload: &[u8]) -> T::Signature {
