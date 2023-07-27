@@ -41,7 +41,7 @@ darling = "0.20.0"
 derivative = "2.2.0"
 either = "1.8.1"
 frame-metadata = { version = "15.1.0", features = ["v14", "v15-unstable", "std"] }
-futures = { version = "0.3.27", default-features = false, features = ["std"] }
+futures = { version = "0.3.24", default-features = false, features = ["std"] }
 getrandom = "0.2"
 hex = "0.4.3"
 heck = "0.4.1"
