@@ -73,6 +73,8 @@ pub use crate::{
     metadata::Metadata,
 };
 
+pub use jsonrpsee::core::Error as JsonRpseeError;
+
 /// Re-export external crates that are made use of in the subxt API.
 pub mod ext {
     pub use codec;
