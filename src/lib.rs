@@ -71,7 +71,7 @@ use std::{
 pub use secp256k1::{PublicKey, SecretKey, sign, Message};
 
 mod error;
-mod events;
+pub mod events;
 pub mod extrinsic;
 pub mod frame;
 mod metadata;
