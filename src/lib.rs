@@ -19,9 +19,7 @@
 
 #![deny(
     bad_style,
-    const_err,
     improper_ctypes,
-    missing_docs,
     non_shorthand_field_patterns,
     no_mangle_generic_items,
     overflowing_literals,
@@ -178,12 +176,11 @@ impl<T: Runtime> ClientBuilder<T> {
     /// # Panics
     ///
     /// If there is already a type size registered with this name.
-    pub fn register_type_size<U>(mut self, name: &str) -> Self
+    pub fn register_type_size<U>(&mut self, name: &str)
         where
             U: Codec + Send + Sync + 'static,
     {
         self.event_type_registry.register_type_size::<U>(name);
-        self
     }
 
     /// Disable the check for missing type sizes on `build`.
