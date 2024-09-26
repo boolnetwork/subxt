@@ -56,6 +56,32 @@ pub struct Payload<CallData> {
     validation_hash: Option<[u8; 32]>,
 }
 
+macro_rules! boxed_payload {
+    ($ty:path) => {
+        impl<T: TxPayload + ?Sized> TxPayload for $ty {
+            fn encode_call_data_to(
+                &self,
+                metadata: &Metadata,
+                out: &mut Vec<u8>,
+            ) -> Result<(), Error> {
+                self.as_ref().encode_call_data_to(metadata, out)
+            }
+            fn encode_call_data(&self, metadata: &Metadata) -> Result<Vec<u8>, Error> {
+                self.as_ref().encode_call_data(metadata)
+            }
+            fn validation_details(&self) -> Option<ValidationDetails<'_>> {
+                self.as_ref().validation_details()
+            }
+        }
+    };
+}
+
+boxed_payload!(Box<T>);
+#[cfg(feature = "std")]
+boxed_payload!(std::sync::Arc<T>);
+#[cfg(feature = "std")]
+boxed_payload!(std::rc::Rc<T>);
+
 /// A boxed transaction payload.
 // Dev Note: Arc used to enable easy cloning (given that we can't have dyn Clone).
 pub type BoxedPayload = Payload<Arc<dyn EncodeAsFields + Send + Sync + 'static>>;
