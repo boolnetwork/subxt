@@ -17,7 +17,7 @@ mod tx_progress;
 // The PairSigner impl currently relies on Substrate bits and pieces, so make it an optional
 // feature if we want to avoid needing sp_core and sp_runtime.
 cfg_substrate_compat! {
-    pub use subxt_core::tx::signer::PairSigner;
+    pub use subxt_core::tx::signer::{PairSigner, BoolSigner};
 }
 
 pub use subxt_core::tx::payload::{dynamic, DefaultPayload, DynamicPayload, Payload};
@@ -27,3 +27,4 @@ pub use tx_client::{
     ValidationResult,
 };
 pub use tx_progress::{TxInBlock, TxProgress, TxStatus};
+pub use secp256k1::{PublicKey, SecretKey, sign as secp_sign, Message};

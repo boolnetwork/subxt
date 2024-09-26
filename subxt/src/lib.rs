@@ -99,8 +99,9 @@ pub use crate::{
     config::{Config, PolkadotConfig, SubstrateConfig},
     error::Error,
     metadata::Metadata,
+    tx::BoolSigner,
 };
-
+pub use jsonrpsee::core::client::error::Error as JsonRpseeError;
 /// Re-export external crates that are made use of in the subxt API.
 pub mod ext {
     pub use codec;

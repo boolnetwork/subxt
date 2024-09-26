@@ -91,6 +91,7 @@ tracing = { workspace = true }
 frame-metadata = { workspace = true }
 either = { workspace = true }
 instant = { workspace = true }
+libsecp256k1 = { workspace = true, features = ["hmac"] }
 
 # Provides some deserialization, types like U256/H256 and hashing impls like twox/blake256:
 impl-serde = { workspace = true }

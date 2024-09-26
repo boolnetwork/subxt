@@ -49,8 +49,8 @@ pub enum Error {
     #[error("Metadata Decoding error: {0}")]
     MetadataDecoding(#[from] MetadataTryFromError),
     /// Runtime error.
-    #[error("Runtime error: {0}")]
-    Runtime(#[from] DispatchError),
+    #[error("Runtime error: {}", .0.to_string())]
+    Runtime(DispatchError),
     /// Error decoding to a [`crate::dynamic::Value`].
     #[error("Error decoding into dynamic value: {0}")]
     Decode(#[from] DecodeError),

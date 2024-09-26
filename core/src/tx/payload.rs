@@ -13,6 +13,7 @@ use alloc::boxed::Box;
 use alloc::string::String;
 
 use alloc::vec::Vec;
+use std::sync::Arc;
 use codec::Encode;
 use scale_encode::EncodeAsFields;
 use scale_value::{Composite, Value, ValueDef, Variant};
@@ -143,6 +144,11 @@ impl<CallData> DefaultPayload<CallData> {
     /// Returns the call name.
     pub fn call_name(&self) -> &str {
         &self.call_name
+    }
+
+    /// Returns the call validation_hash.
+    pub fn call_validation_hash(&self) -> &Option<[u8; 32]> {
+        &self.validation_hash
     }
 }
 
