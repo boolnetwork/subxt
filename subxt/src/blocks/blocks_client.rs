@@ -62,7 +62,7 @@ where
 
     /// Obtain block details given the provided block hash, or the latest block if `None` is
     /// provided.
-    fn at_or_latest(
+    pub fn at_or_latest(
         &self,
         block_ref: Option<BlockRef<T::Hash>>,
     ) -> impl Future<Output = Result<Block<T, Client>, Error>> + Send + 'static {
