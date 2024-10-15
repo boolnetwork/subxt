@@ -52,7 +52,7 @@ version = "0.7.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "891477e0c6a8957309ee5c45a6368af3ae14bb510732d2684ffa19af310920f9"
 dependencies = [
- "getrandom",
+ "getrandom 0.2.14",
  "once_cell",
  "version_check",
 ]
@@ -64,7 +64,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e89da841a80418a9b391ebaea17f5c112ffaaa96f621d2c285b5174da76b9011"
 dependencies = [
  "cfg-if",
- "getrandom",
+ "getrandom 0.2.14",
  "once_cell",
  "version_check",
  "zerocopy",
@@ -786,8 +786,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "93f2635620bf0b9d4576eb7bb9a38a55df78bd1205d26fa994b25911a69f212f"
 dependencies = [
  "bitcoin_hashes 0.11.0",
- "rand 0.8.5",
- "rand_core 0.6.4",
+ "rand 0.7.3",
+ "rand_core 0.5.1",
  "serde",
  "unicode-normalization",
 ]
@@ -2343,6 +2343,17 @@ dependencies = [
 
 [[package]]
 name = "getrandom"
+version = "0.1.16"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8fc3cb4d91f53b50155bdcfd23f6a4c39ae1969c2ae85982b135750cccaf5fce"
+dependencies = [
+ "cfg-if",
+ "libc",
+ "wasi 0.9.0+wasi-snapshot-preview1",
+]
+
+[[package]]
+name = "getrandom"
 version = "0.2.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "94b22e06ecb0110981051723910cbf0b5f5e09a2062dd7663334ee79a9d1286c"
@@ -2350,7 +2361,7 @@ dependencies = [
  "cfg-if",
  "js-sys",
  "libc",
- "wasi",
+ "wasi 0.11.0+wasi-snapshot-preview1",
  "wasm-bindgen",
 ]
 
@@ -3447,7 +3458,7 @@ checksum = "4569e456d394deccd22ce1c1913e6ea0e54519f577285001215d33557431afe4"
 dependencies = [
  "hermit-abi 0.3.9",
  "libc",
- "wasi",
+ "wasi 0.11.0+wasi-snapshot-preview1",
  "windows-sys 0.52.0",
 ]
 
@@ -3592,7 +3603,7 @@ dependencies = [
 [[package]]
 name = "occlum-ra"
 version = "0.1.0"
-source = "git+https://github.com/ABMatrix/occlum-ra?rev=c570ef91149856b74e5f5393db00143428815f52#c570ef91149856b74e5f5393db00143428815f52"
+source = "git+https://github.com/ABMatrix/smoldot?branch=bool#dbac4d484635701f4d4cc0d351dba943c6aa0360"
 dependencies = [
  "base64 0.9.3",
  "bit-vec",
@@ -3603,7 +3614,7 @@ dependencies = [
  "itertools 0.8.2",
  "log",
  "rand 0.8.5",
- "ring 0.17.8",
+ "ring 0.16.20",
  "rustls 0.19.1",
  "serde",
  "serde_json",
@@ -3667,8 +3678,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4e69bf016dc406eff7d53a7d3f7cf1c2e72c82b9088aac1118591e36dd2cd3e9"
 dependencies = [
  "bitcoin_hashes 0.13.0",
- "rand 0.8.5",
- "rand_core 0.6.4",
+ "rand 0.7.3",
+ "rand_core 0.5.1",
  "serde",
  "unicode-normalization",
 ]
@@ -4122,6 +4133,8 @@ version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6a6b1679d49b24bbfe0c803429aa1874472f50d9b363131f0e89fc356b544d03"
 dependencies = [
+ "getrandom 0.1.16",
+ "libc",
  "rand_chacha 0.2.2",
  "rand_core 0.5.1",
  "rand_hc",
@@ -4163,6 +4176,9 @@ name = "rand_core"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "90bde5296fc891b0cef12a6d03ddccc162ce7b2aff54160af9338f8d40df6d19"
+dependencies = [
+ "getrandom 0.1.16",
+]
 
 [[package]]
 name = "rand_core"
@@ -4170,7 +4186,7 @@ version = "0.6.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c"
 dependencies = [
- "getrandom",
+ "getrandom 0.2.14",
 ]
 
 [[package]]
@@ -4226,7 +4242,7 @@ version = "0.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ba009ff324d1fc1b900bd1fdb31564febe58a8ccc8a6fdbb93b543d33b13ca43"
 dependencies = [
- "getrandom",
+ "getrandom 0.2.14",
  "libredox",
  "thiserror",
 ]
@@ -4357,7 +4373,7 @@ checksum = "c17fa4cb658e3583423e915b9f3acc01cceaee1860e33d59ebae66adc3a2dc0d"
 dependencies = [
  "cc",
  "cfg-if",
- "getrandom",
+ "getrandom 0.2.14",
  "libc",
  "spin 0.9.8",
  "untrusted 0.9.0",
@@ -5186,7 +5202,7 @@ dependencies = [
 [[package]]
 name = "smoldot"
 version = "0.18.0"
-source = "git+https://github.com/ABMatrix/smoldot?branch=bool#de391a10f568febba2f2da9d64ec6ce14248ebbc"
+source = "git+https://github.com/ABMatrix/smoldot?branch=bool#dbac4d484635701f4d4cc0d351dba943c6aa0360"
 dependencies = [
  "arrayvec 0.7.6",
  "async-lock",
@@ -5240,7 +5256,7 @@ dependencies = [
 [[package]]
 name = "smoldot-light"
 version = "0.16.2"
-source = "git+https://github.com/ABMatrix/smoldot?branch=bool#de391a10f568febba2f2da9d64ec6ce14248ebbc"
+source = "git+https://github.com/ABMatrix/smoldot?branch=bool#dbac4d484635701f4d4cc0d351dba943c6aa0360"
 dependencies = [
  "async-channel",
  "async-lock",
@@ -6340,7 +6356,7 @@ dependencies = [
  "finito",
  "frame-metadata 16.0.0",
  "futures",
- "getrandom",
+ "getrandom 0.2.14",
  "hex",
  "http-body",
  "hyper",
@@ -6410,7 +6426,7 @@ name = "subxt-codegen"
 version = "0.37.0"
 dependencies = [
  "frame-metadata 16.0.0",
- "getrandom",
+ "getrandom 0.2.14",
  "heck 0.5.0",
  "hex",
  "jsonrpsee",
@@ -6466,7 +6482,7 @@ dependencies = [
  "futures",
  "futures-timer",
  "futures-util",
- "getrandom",
+ "getrandom 0.2.14",
  "instant",
  "js-sys",
  "pin-project",
@@ -6525,7 +6541,7 @@ dependencies = [
  "bip39",
  "cfg-if",
  "crypto_secretbox",
- "getrandom",
+ "getrandom 0.2.14",
  "hex",
  "hex-literal",
  "hmac 0.12.1",
@@ -7063,7 +7079,7 @@ checksum = "97fee6b57c6a41524a810daee9286c02d7752c4253064d0b05472833a438f675"
 dependencies = [
  "cfg-if",
  "digest 0.10.7",
- "rand 0.8.5",
+ "rand 0.7.3",
  "static_assertions",
 ]
 
@@ -7286,6 +7302,12 @@ checksum = "bfa7760aed19e106de2c7c0b581b509f2f25d3dacaf737cb82ac61bc6d760b0e"
 dependencies = [
  "try-lock",
 ]
+
+[[package]]
+name = "wasi"
+version = "0.9.0+wasi-snapshot-preview1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cccddf32554fecc6acb585f82a32a72e28b48f8c4c1883ddfeeeaa96f7d8e519"
 
 [[package]]
 name = "wasi"
