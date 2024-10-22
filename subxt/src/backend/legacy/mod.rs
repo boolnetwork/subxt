@@ -379,8 +379,8 @@ impl<T: Config + Send + Sync + 'static> Backend<T> for LegacyBackend<T> {
                             message: "Transaction was usurped by another with the same nonce"
                                 .into(),
                         }),
-                        RpcTransactionStatus::Dropped => Some(TransactionStatus::Dropped {
-                            message: "Transaction was dropped".into(),
+                        RpcTransactionStatus::Dropped(message) => Some(TransactionStatus::Dropped {
+                            message,
                         }),
                         RpcTransactionStatus::Invalid => Some(TransactionStatus::Invalid {
                             message:

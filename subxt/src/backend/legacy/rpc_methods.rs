@@ -505,7 +505,7 @@ pub enum TransactionStatus<Hash> {
     /// that provides the same tags. (e.g. same (sender, nonce)).
     Usurped(Hash),
     /// Transaction has been dropped from the pool because of the limit.
-    Dropped,
+    Dropped(String),
     /// Transaction is no longer valid in the current state.
     Invalid,
 }
