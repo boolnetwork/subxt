@@ -120,8 +120,8 @@ sc-executor = "0.40.0"
 sc-executor-common = "0.35.0"
 libsecp256k1 = { version = "0.3.2", default-features = false }
 # Light client support:
-smoldot = { git = "https://github.com/ABMatrix/smoldot", branch = "bool", default-features = false }
-smoldot-light = { git = "https://github.com/ABMatrix/smoldot", branch = "bool", default-features = false }
+smoldot = { git = "https://github.com/ABMatrix/smoldot", branch = "ignore-duplicate-grandpa-pk", default-features = false }
+smoldot-light = { git = "https://github.com/ABMatrix/smoldot", branch = "ignore-duplicate-grandpa-pk", default-features = false }
 tokio-stream = "0.1.16"
 futures-util = "0.3.30"
 rand = "0.8.5"
