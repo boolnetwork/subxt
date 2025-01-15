@@ -5186,7 +5186,7 @@ dependencies = [
 [[package]]
 name = "smoldot"
 version = "0.18.0"
-source = "git+https://github.com/ABMatrix/smoldot?branch=ignore-duplicate-grandpa-pk#803f17d027eed0963c42258345d6c2011f938fa4"
+source = "git+https://github.com/ABMatrix/smoldot?branch=bool#dccd8223daedf6aae83310ac1a27da95cb784e7c"
 dependencies = [
  "arrayvec 0.7.6",
  "async-lock",
@@ -5216,6 +5216,7 @@ dependencies = [
  "num-bigint",
  "num-rational",
  "num-traits",
+ "parity-scale-codec",
  "pbkdf2 0.12.2",
  "pin-project",
  "poly1305",
@@ -5240,7 +5241,7 @@ dependencies = [
 [[package]]
 name = "smoldot-light"
 version = "0.16.2"
-source = "git+https://github.com/ABMatrix/smoldot?branch=ignore-duplicate-grandpa-pk#803f17d027eed0963c42258345d6c2011f938fa4"
+source = "git+https://github.com/ABMatrix/smoldot?branch=bool#dccd8223daedf6aae83310ac1a27da95cb784e7c"
 dependencies = [
  "async-channel",
  "async-lock",
