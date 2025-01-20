@@ -5186,7 +5186,7 @@ dependencies = [
 [[package]]
 name = "smoldot"
 version = "0.18.0"
-source = "git+https://github.com/ABMatrix/smoldot?branch=bool#dccd8223daedf6aae83310ac1a27da95cb784e7c"
+source = "git+https://github.com/ABMatrix/smoldot?branch=bool#fc8c6916f8f8cb0ac3080c4d670991a1ed32e36a"
 dependencies = [
  "arrayvec 0.7.6",
  "async-lock",
@@ -5241,7 +5241,7 @@ dependencies = [
 [[package]]
 name = "smoldot-light"
 version = "0.16.2"
-source = "git+https://github.com/ABMatrix/smoldot?branch=bool#dccd8223daedf6aae83310ac1a27da95cb784e7c"
+source = "git+https://github.com/ABMatrix/smoldot?branch=bool#fc8c6916f8f8cb0ac3080c4d670991a1ed32e36a"
 dependencies = [
  "async-channel",
  "async-lock",
