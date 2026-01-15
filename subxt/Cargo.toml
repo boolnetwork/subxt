@@ -91,3 +91,5 @@ sp-runtime = { workspace = true }
 sp-keyring = { workspace = true }
 sp-version = { workspace = true }
 assert_matches = { workspace = true }
+#bnk-pallets-api = { git = "https://github.com/boolnetwork/bnk-pallets-api", branch = "mth-test" }
+bnk-pallets-api = { path = "../../bnk-pallets-api" }

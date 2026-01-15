@@ -86,3 +86,15 @@ subxt-metadata = { version = "0.29.0", path = "metadata" }
 subxt-codegen = { version = "0.29.0", path = "codegen" }
 test-runtime = { path = "testing/test-runtime" }
 substrate-runner = { path = "testing/substrate-runner" }
+
+[patch.'https://github.com/w3f/fflonk']
+fflonk = { git = "https://www.github.com/w3f/fflonk", rev = "be95d4c971b1d15b5badfc06ff13f5c07987d484" }
+
+[patch.crates-io]
+ring = { git = "https://github.com/boolnetwork/ring", branch = "0.16.20" }
+
+[patch.'https://github.com/w3f/ring-proof']
+ring = { git = "https://www.github.com/w3f/ring-proof", rev = "b273d33f9981e2bb3375ab45faeb537f7ee35224" }
+
+[patch.'https://github.com/paritytech/polkadot-sdk']
+sp-runtime-interface = { git = "https://www.github.com/paritytech/polkadot-sdk", rev = "edf79aa972bcf2e043e18065a9bb860ecdbd1a6e" }
