@@ -142,9 +142,8 @@ async fn transfer(args: Vec<String>) {
                         // println!("Alice{i} address {} has balance: {}", AccountId32::from(from.public()), account_info.data.free);
                         // break;
                     }
-                } else {
-                    tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
                 }
+                tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
             }
             let mut account_nonce = api.tx().account_nonce(&AccountId32::from(from.public())).await.unwrap();
             let mut round_txs: Vec<_> = Vec::new();

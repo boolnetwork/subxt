@@ -185,10 +185,11 @@ async fn transfer(args: Vec<String>) {
     println!("Alice try transfer finished");
     let mut tasks: Vec<tokio::task::JoinHandle<ThreadStats>> = vec![];
     let total_start = Arc::new(tokio::sync::RwLock::new(None::<Instant>));
-    let prepare_count = Arc::new(tokio::sync::RwLock::new(0usize));
+    // Barrier::new panics on zero parties; with threads=0 no task ever waits on it
+    let barrier = Arc::new(tokio::sync::Barrier::new(threads.max(1)));
     for i in 0..threads {
         let total_start_i = total_start.clone();
-        let prepare_count_i = prepare_count.clone();
+        let barrier_i = barrier.clone();
         let inflight_limit = inflight_limit.clone();
         let ws_url = ws_url.clone();
         let from = send_accs[i].clone();
@@ -214,9 +215,8 @@ async fn transfer(args: Vec<String>) {
                             panic!("Alice{i} address {} has quota: {} not enough for {} transaction", AccountId32::from(from.public()), account_info.quota, thread_transaction * loop_times as usize);
                         }
                     }
-                } else {
-                    tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
                 }
+                tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
             }
             let mut account_nonce = api.tx().account_nonce(&AccountId32::from(from.public())).await.unwrap();
             let mut stats = ThreadStats { sent: 0, ok: 0, err: 0, send_micros: 0, full_micros: 0 };
@@ -237,13 +237,7 @@ async fn transfer(args: Vec<String>) {
                     (t, tx, account_nonce - 1)
                 })
                     .collect();
-                *prepare_count_i.write().await += 1;
-                loop {
-                    if *prepare_count_i.write().await % threads == 0 {
-                        break;
-                    }
-                    tokio::time::sleep(std::time::Duration::from_micros(10)).await;
-                }
+                barrier_i.wait().await;
                 let mut total_start_i = total_start_i.write().await;
                 if total_start_i.is_none() {
                     *total_start_i = Some(std::time::Instant::now());
@@ -256,14 +250,11 @@ async fn transfer(args: Vec<String>) {
                 let mut inflight: Vec<tokio::task::JoinHandle<(usize, usize)>> = vec![];
                 for (chunk_i, chunk) in transactions.chunks(submit_batch_size).enumerate() {
                     let txs = chunk.len();
-                    let calls: Vec<_> = chunk
-                        .iter()
-                        .map(|(_, transaction, _)| transaction.encoded().to_vec())
-                        .collect::<Vec<_>>()
-                        .concat();
                     let mut encoded_txs = Vec::new();
                     Compact(txs as u32).encode_to(&mut encoded_txs);
-                    encoded_txs.extend(calls);
+                    for (_, transaction, _) in chunk {
+                        encoded_txs.extend_from_slice(transaction.encoded());
+                    }
                     if wait {
                         let (ok, err) = submit_chunk(api.clone(), encoded_txs, i, chunk_i, txs).await;
                         ok_r += ok;
